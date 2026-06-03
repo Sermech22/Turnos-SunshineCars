@@ -573,7 +573,7 @@ body.light-mode .nav-link { color:#0d1b2a !important; }
     <button class="nav-btn" onclick="showView('resenas')" style="border-color:rgba(255,193,7,.4);color:#ffc107;">&#11088; Resenas</button>
     <button class="nav-btn" onclick="showView('galeria')" style="border-color:rgba(205,127,50,.3);">&#127757; Galeria</button>
     <button class="nav-btn" onclick="showView('tienda')" style="border-color:rgba(205,127,50,.5);color:var(--m);">&#128722; Tienda</button>
-    <button class="nav-btn" onclick="isAdminLogged?showView('admin'):(showView('admin-login'),clearAdminBadge());" id="nav-admin-btn" style="position:relative;">Admin<span id="admin-badge" style="display:none;position:absolute;top:-6px;right:-6px;background:#ff3b3b;color:#fff;width:18px;height:18px;border-radius:50%;font-size:.65rem;font-weight:800;display:none;align-items:center;justify-content:center;border:2px solid #0A1128;" id="admin-badge">0</span></button>
+    
   </div>
   <!-- Mobile hamburger -->
   <button class="nav-hamburger" onclick="toggleMobileMenu()" id="nav-hamburger">&#9776;</button>
@@ -5811,6 +5811,23 @@ setTimeout(function() {
     if (unread) unread.style.display = 'flex';
   }
 }, 5000);
+
+// ==========================================
+// SECRET ADMIN ACCESS via URL hash
+// ==========================================
+function checkSecretHash() {
+  if (window.location.hash === '#admin-sc2024') {
+    window.location.hash = '';
+    if (isAdminLogged) {
+      showView('admin');
+    } else {
+      showView('admin-login');
+      clearAdminBadge && clearAdminBadge();
+    }
+  }
+}
+window.addEventListener('hashchange', checkSecretHash);
+checkSecretHash();
 
 // INIT
 // ==========================================
